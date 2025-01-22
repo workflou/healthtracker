@@ -1,6 +1,7 @@
 package main
 
 import (
+	"healthtracker/static"
 	"log"
 	"log/slog"
 	"net/http"
@@ -10,10 +11,12 @@ import (
 
 func main() {
 	r := chi.NewRouter()
+	h := newHandler()
 
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello, world!"))
-	})
+	r.Get("/", h.HomePage())
+	r.Get("/login", h.LoginPage())
+
+	r.Handle("/static/*", http.StripPrefix("/static/", http.FileServerFS(static.FS)))
 
 	s := http.Server{
 		Addr:    ":4000",
