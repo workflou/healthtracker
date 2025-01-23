@@ -1,16 +1,20 @@
 package main
 
 import (
+	"database/sql"
 	"healthtracker/html"
 	"html/template"
 	"net/http"
 )
 
 type handler struct {
+	db *sql.DB
 }
 
-func newHandler() *handler {
-	return &handler{}
+func newHandler(db *sql.DB) *handler {
+	return &handler{
+		db: db,
+	}
 }
 
 func (h *handler) HomePage() http.HandlerFunc {
