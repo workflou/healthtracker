@@ -25,8 +25,8 @@ func main() {
 		r.Use(newAuthMiddleware())
 
 		r.Get("/", newHomeHandler(db).Index())
-
 	})
+
 	r.Group(func(r chi.Router) {
 		r.Get("/login", newSessionHandler(db).LoginPage())
 	})

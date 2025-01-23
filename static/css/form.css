@@ -1,0 +1,85 @@
+:root {
+    --form-gap: 12px;
+    --form-control-padding: 4px;
+    --input-border-radius: 8px;
+    --input-padding: 8px;
+    --button-padding: 8px;
+    --button-border-radius: 12px;
+}
+
+.form {
+    display: flex;
+    gap: var(--form-gap);
+    justify-content: stretch;
+}
+
+.form--vertical {
+    flex-direction: column;
+}
+
+.form__control {
+    position: relative;
+}
+
+.form__control>label {
+    position: absolute;
+    top: var(--input-padding);
+    left: var(--input-padding);
+}
+
+.form__control>input:focus+label,
+.form__control>input:not(:placeholder-shown)+label {
+    transform: translateY(calc(-50% - var(--input-padding))) scale(.8);
+}
+
+.button {
+    padding: 12px 25px;
+    border-radius: var(--button-border-radius);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.button--primary {
+    background: linear-gradient(to bottom,
+            var(--bg-primary-start),
+            var(--bg-primary-end));
+    color: var(--text-primary);
+    border: 1px solid var(--border-primary);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2), 0 2px 0 rgba(255, 255, 255, 0.3) inset;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.button--primary:hover {
+    background: linear-gradient(to bottom,
+            lch(67% 60 140),
+            lch(57% 60 140));
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    transform: translateY(1px);
+}
+
+.button--primary:active {
+    background: linear-gradient(to bottom,
+            lch(63% 60 140),
+            /* Slightly darker */
+            lch(53% 60 140));
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    transform: translateY(3px);
+}
+
+.button--primary:disabled {
+    background: #cccccc;
+    border-color: #cccccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.input {
+    padding: var(--input-padding);
+    width: 100%;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: var(--input-border-radius);
+}
