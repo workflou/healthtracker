@@ -21,8 +21,15 @@ func main() {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Timeout(60 * time.Second))
 
-	r.Get("/", newHomeHandler(db).Index())
-	r.Get("/login", newSessionHandler(db).LoginPage())
+	r.Group(func(r chi.Router) {
+		r.Use(newAuthMiddleware())
+
+		r.Get("/", newHomeHandler(db).Index())
+
+	})
+	r.Group(func(r chi.Router) {
+		r.Get("/login", newSessionHandler(db).LoginPage())
+	})
 
 	r.Handle("/static/*", http.StripPrefix("/static/", http.FileServerFS(static.FS)))
 
