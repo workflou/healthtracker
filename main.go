@@ -13,7 +13,6 @@ import (
 
 func main() {
 	db := mustNewDatabase(":memory:")
-	h := newHandler(db)
 
 	r := chi.NewRouter()
 	r.Use(middleware.RequestID)
@@ -22,8 +21,8 @@ func main() {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Timeout(60 * time.Second))
 
-	r.Get("/", h.HomePage())
-	r.Get("/login", h.LoginPage())
+	r.Get("/", newHomeHandler(db).Index())
+	r.Get("/login", newSessionHandler(db).LoginPage())
 
 	r.Handle("/static/*", http.StripPrefix("/static/", http.FileServerFS(static.FS)))
 
